@@ -7,6 +7,9 @@ podTemplate(label: label, containers: [
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
     ]) {
     node(label) {
+        def myRepo = checkout scm
+        def gitCommit = myRepo.GIT_COMMIT
+        def gitBranch = myRepo.GIT_BRANCH
         stage('Run shell') {
             sh 'echo hello world'
         }
