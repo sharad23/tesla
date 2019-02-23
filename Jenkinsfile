@@ -13,6 +13,7 @@ podTemplate(label: label, containers: [
         stage('push to docker hub'){
             container('docker'){
                 sh 'docker pull busybox'
+                sh "echo ${gitCommit}"
             }
         }
         stage('Run kubectl') {
