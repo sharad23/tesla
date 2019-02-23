@@ -12,17 +12,7 @@ podTemplate(label: label, containers: [
         }
         stage('push to docker hub'){
             container('docker'){
-               withCredentials([[$class: 'UsernamePasswordMultiBinding',
-                  credentialsId: 'dockerhub',
-                  usernameVariable: 'DOCKER_HUB_USER',
-                  passwordVariable: 'DOCKER_HUB_PASSWORD']]) {
-                  sh """
-                    docker login -u ${DOCKER_HUB_USER} -p ${DOCKER_HUB_PASSWORD}
-                    docker build -t sharad23/django-k8:${gitCommit} .
-                    docker push sharad23/django-k8:${gitCommit}
-                    """
-                }
-              }
+                sh 'docker pull busybox'
             }
         }
         stage('Run kubectl') {
