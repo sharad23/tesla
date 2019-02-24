@@ -7,12 +7,10 @@ podTemplate(label: label, containers: [
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
     ]) {
     node(label) {
-        checkout scm
-        stash source
-
-
         stage('Run shell') {
             sh 'echo hello world'
+            sh 'ls -la'
+            checkout scm
         }
         stage('push to docker hub'){
             container('docker'){
