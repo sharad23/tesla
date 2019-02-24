@@ -10,6 +10,7 @@ podTemplate(label: label, containers: [
         stage('Run shell') {
             sh 'echo hello world'
             sh 'ls -la'
+            sh 'git clone https://github.com/sharad23/tesla.git'
             checkout scm
         }
         stage('push to docker hub'){
