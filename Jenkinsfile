@@ -37,7 +37,7 @@ podTemplate(label: label, containers: [
             sh "kubectl get pods"
             sh "kubectl get svc"
             sh "kubectl get deployments"
-            sh "kubectl --record deployment/web set image deployment/web web=sharad23/django-k8:${gitCommit}"
+            sh "kubectl --record deployment/django set image deployment/django django-k8=sharad23/django-k8:${gitCommit}"
           }
         }
     }
