@@ -13,6 +13,8 @@ podTemplate(label: label, containers: [
 
         stage('Run shell') {
             sh 'echo hello world'
+            sh "echo ${gitBranch}"
+            sh "echo ${gitCommit}"
 
         }
         stage('push to docker hub'){
