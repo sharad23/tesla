@@ -7,11 +7,13 @@ podTemplate(label: label, containers: [
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
     ]) {
     node(label) {
+        def myRepo = checkout scm
+        def gitCommit = myRepo.GIT_COMMIT
+        def gitBranch = myRepo.GIT_BRANCH
+
         stage('Run shell') {
             sh 'echo hello world'
-            sh 'ls -la'
-            sh 'git clone https://github.com/sharad23/tesla.git'
-            checkout scm
+
         }
         stage('push to docker hub'){
             container('docker'){
@@ -20,6 +22,7 @@ podTemplate(label: label, containers: [
                   usernameVariable: 'DOCKER_HUB_USER',
                   passwordVariable: 'DOCKER_HUB_PASSWORD']]) {
                   sh """
+                    ls -ls
                     docker login -u ${DOCKER_HUB_USER} -p ${DOCKER_HUB_PASSWORD}
                     docker build -t sharad23/django-k8:v4 .
                     docker push sharad23/django-k8:v4
@@ -32,7 +35,7 @@ podTemplate(label: label, containers: [
             sh "kubectl get pods"
             sh "kubectl get svc"
             sh "kubectl get deployments"
-            sh "kubectl --record deployment/web set image deployment/web web=sharad23/sharad-nginx:v2"
+            // sh "kubectl --record deployment/web set image deployment/web web=sharad23/sharad-nginx:v2"
           }
         }
     }
