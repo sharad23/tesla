@@ -26,8 +26,8 @@ podTemplate(label: label, containers: [
                   sh """
                     ls -ls
                     docker login -u ${DOCKER_HUB_USER} -p ${DOCKER_HUB_PASSWORD}
-                    docker build -t sharad23/django-k8:v4 .
-                    docker push sharad23/django-k8:v4
+                    docker build -t sharad23/django-k8:${gitCommit} .
+                    docker push sharad23/django-k8:${gitCommit}
                     """
                 }
             }
@@ -37,7 +37,7 @@ podTemplate(label: label, containers: [
             sh "kubectl get pods"
             sh "kubectl get svc"
             sh "kubectl get deployments"
-            // sh "kubectl --record deployment/web set image deployment/web web=sharad23/sharad-nginx:v2"
+            sh "kubectl --record deployment/web set image deployment/web web=sharad23/django-k8:${gitCommit}"
           }
         }
     }
